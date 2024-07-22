@@ -2,7 +2,7 @@
 
 ### Romain Loup, François Bavaud
 
-This repository contains the data and code in order to produce the results in the article <a href=https://appliednetsci.springeropen.com/articles/10.1007/s41109-023-00570-7> *Spatial Autocorrelation of Political Opinions: the case of Swiss Federal Votes*</a>, with applications to the Swiss ballot vote results at the municipality scale.
+This repository contains the data and code in order to produce the results in the article <a href=https://> *Spatial Autocorrelation of Political Opinions: the case of Swiss Federal Votes*</a>, with applications to the Swiss ballot vote results at the municipality scale.
 
 ## Abstract 
 The kernel approach to spatial analysis, well adapted to weighted, multivariate configurations involving $n$ regions, results from the comparison of two symmetric $n\times n$ matrices, a feature kernel and a spatial kernel. Many possible constructions can be contemplated,
