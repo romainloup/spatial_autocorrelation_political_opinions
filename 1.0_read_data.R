@@ -55,6 +55,10 @@ colnames(eucl_mat) = colnames(distance_mat)
 # elevation = get_elev_point(communes_sf, prj = prj_dd, src = "aws", z = 12)
 # communes_sf$altitude = elevation$elevation
 # elev_dist = outer(communes_sf$altitude, communes_sf$altitude, "-")
+
+# Direct load of "elev_dist"
 # write.csv(elev_dist, "data/distances/elev_dist_2023.csv", row.names = FALSE)
 elev_dist = read.csv("data/distances/elev_dist_2023.csv")
 elev_dist = as.matrix(elev_dist)
+
+
