@@ -50,3 +50,4 @@ rsconnect/
 
 # Custom attributes
 .DS_Store
+.gitattributes
