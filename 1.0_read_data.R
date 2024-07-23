@@ -1,12 +1,13 @@
 #--------------------------------
-# Packages
+# Read data
 #--------------------------------
+# read all needed base data
+
+
+# --- Packages
 library(sf)
 library(dplyr)
 
-#--------------------------------
-# Read data
-#--------------------------------
 
 # --- GIS data
 # municipalities GIS data
