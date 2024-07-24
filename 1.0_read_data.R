@@ -1,48 +1,47 @@
 #--------------------------------
-# Read data
+# Load Libraries
 #--------------------------------
-# read all needed base data
-
-
-# --- Packages
 library(sf)
 library(dplyr)
 
+#--------------------------------
+# Read GIS Data
+#--------------------------------
 
-# --- GIS data
-# municipalities GIS data
+# Read municipalities GIS data
 ch = st_read("data/GIS_data/ch.shp")
-for (i in 1:dim(ch)[1]) {
-  if (is.na(ch$BEZIRKSNUM[i])) {
-    ch$BEZIRKSNUM[i] = ch$KANTONSNUM[i]*10000
-  }
-}
 
-# main swiss lakes
+# Ensure 'BEZIRKSNUM' is not NA
+ch$BEZIRKSNUM = ifelse(is.na(ch$BEZIRKSNUM), ch$KANTONSNUM * 10000, ch$BEZIRKSNUM)
+
+# Read and transform main Swiss lakes GIS data
 lakes = st_read("data/GIS_data/SMV25_lakes.shp")
-lakes = st_transform(lakes, crs = 4326) # transform Geodetic CRS
+lakes = st_transform(lakes, crs = 4326)  # Transform to Geodetic CRS
 
-# --- Other data
+#--------------------------------
+# Read Other Data
+#--------------------------------
+
+# Read CSV data
 A = read.csv("data/A.csv")
 dataVotSum = read.csv("data/numberVoter.csv")
 dataVot = read.csv("data/dataVot2023.csv")
 
-# --- Distances
-# - Road distance -> distance_mat
+#--------------------------------
+# Read and Process Distance Data
+#--------------------------------
+
+# Road distance matrix
 distance_mat = read.csv("data/distances/distance_mat_2023.csv")
-# set specific column as row names
-rownames(distance_mat) = distance_mat[,1]
-# remove original column from data frame
-distance_mat[,1] = NULL
+rownames(distance_mat) = distance_mat[, 1]  # Set first column as row names
+distance_mat[, 1] = NULL  # Remove original column from data frame
 
-# - Road time -> time_mat
+# Road time matrix
 time_mat = read.csv("data/distances/time_mat_2023.csv")
-#set specific column as row names
-rownames(time_mat) = time_mat[,1]
-#remove original column from data frame
-time_mat[,1] = NULL
+rownames(time_mat) = time_mat[, 1]  # Set first column as row names
+time_mat[, 1] = NULL  # Remove original column from data frame
 
-# - Euclidean distance -> eucl_mat
+# Euclidean distance matrix
 communes_centres = read.csv("data/distances/communes_ch_centres2023.csv")
 communes_sf = st_as_sf(communes_centres, coords = c("longitude", "latitude"), crs = st_crs(4326))
 communes_sf_ch = st_transform(communes_sf, crs = st_crs(2056))
@@ -50,16 +49,15 @@ eucl_mat = as.matrix(st_distance(communes_sf_ch))
 rownames(eucl_mat) = rownames(distance_mat)
 colnames(eucl_mat) = colnames(distance_mat)
 
-# - Elevation distance -> elev_dist
+# Elevation distance matrix
 # Computation of centers from "communes_sf"
-# prj_dd <- "EPSG:4326"
+# prj_dd = "EPSG:4326"
 # elevation = get_elev_point(communes_sf, prj = prj_dd, src = "aws", z = 12)
 # communes_sf$altitude = elevation$elevation
 # elev_dist = outer(communes_sf$altitude, communes_sf$altitude, "-")
+# write.csv(elev_dist, "data/distances/elev_dist_2023.csv", row.names = FALSE)
 
 # Direct load of "elev_dist"
-# write.csv(elev_dist, "data/distances/elev_dist_2023.csv", row.names = FALSE)
 elev_dist = read.csv("data/distances/elev_dist_2023.csv")
 elev_dist = as.matrix(elev_dist)
-
 
