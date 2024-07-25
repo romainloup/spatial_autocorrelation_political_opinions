@@ -60,4 +60,3 @@ colnames(eucl_mat) = colnames(distance_mat)
 # Direct load of "elev_dist"
 elev_dist = read.csv("data/distances/elev_dist_2023.csv")
 elev_dist = as.matrix(elev_dist)
-
