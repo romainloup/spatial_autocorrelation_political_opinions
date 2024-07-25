@@ -1,4 +1,16 @@
 #--------------------------------
+# Load Libraries
+#--------------------------------
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggtext)
+
+# --- Load data and distance
+source("1.0_read_data.R")
+source("1.1_distances_kernels.R")
+
+#--------------------------------
 # Main functions
 #--------------------------------
 
@@ -12,19 +24,13 @@
 # - eigen_val_list: list of eigenvalues and eigenvectors for each distance
 # - nb_lambda_pos:  list of number of positive lambda values per distance
 
-
 RV <- function(dist_types, f) {
   # Get list of kernels and distances
   K_list <- lapply(paste0("K", dist_types), get)
+  D_list <- lapply(paste0("D", dist_types), function(x) if (exists(x)) get(x) else NULL)
   
-  D_list <- vector(mode = "list", length = length(dist_types))
-  for (i in 1:length(dist_types)) {
-    if (exists(paste0("D", dist_types[i]))) {
-      D_list[[i]] <- get(paste0("D", dist_types[i]))
-    }
-  }
-  # Number of distances
-  n_dist <- length(dist_types)
+  n_dist <- length(dist_types) # Number of distances
+  n <- dim(K_list[[1]])[1]  # Assuming all kernels have the same dimension
   
   # Compute CV_11 and nu_1 for each kernel
   CV_11 <- sapply(K_list, function(K) sum(diag(K %*% K)))
@@ -32,12 +38,8 @@ RV <- function(dist_types, f) {
   
   # Initialize matrices and lists
   E_RV <- Var_RV <- Z_RV <- matrix(NA, nrow = n_dist, ncol = n_dist)
-  Delta_list <- Y_list <- eigen_val_list <- vector("list", length = n_dist)
-  Y_list <- eigen_val_list <- vector("list", length = n_dist)
-  nb_lambda_pos <- vector("list", length = n_dist)
-  
-  n <- dim(K_list[[1]])[1]  # Assuming all kernels have same dimension
-  
+  Delta_list <- Y_list <- eigen_val_list <- nb_lambda_pos <- vector("list", length = n_dist)
+
   # Compute upper triangular indices
   upper_tri_indices <- upper.tri(matrix(1:(n_dist^2), n_dist, n_dist))
   
@@ -50,9 +52,7 @@ RV <- function(dist_types, f) {
     # Calculate CV/RV indices
     CV_22 <- sum(diag(K_list[[j]] %*% K_list[[j]]))
     CV_12 <- sum(diag(K_list[[i]] %*% K_list[[j]]))
-    
     RV_12 <- CV_12 / sqrt(CV_11[i] * CV_22)
-    
     nu_2 <- sum(diag(K_list[[j]]))^2 / sum(diag(K_list[[j]] %*% K_list[[j]]))
     
     # Calculate moments
