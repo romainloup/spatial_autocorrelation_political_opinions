@@ -49,7 +49,7 @@ eucl_mat = as.matrix(st_distance(communes_sf_ch))
 rownames(eucl_mat) = rownames(distance_mat)
 colnames(eucl_mat) = colnames(distance_mat)
 
-# Elevation distance matrix
+# Elevation distance matrix (take time)
 # Computation of centers from "communes_sf"
 # prj_dd = "EPSG:4326"
 # elevation = get_elev_point(communes_sf, prj = prj_dd, src = "aws", z = 12)
