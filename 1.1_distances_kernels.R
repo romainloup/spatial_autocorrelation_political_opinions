@@ -54,6 +54,20 @@ cov_matrix = weighted_covariance(X_centered, f, 1)
 # X ("P_rel") standardized
 x_stand = as.matrix(P_rel-rep(1,n)%*%t(X_bar))%*%(diag(diag(cov_matrix)^-0.5))
 
+# --- logit
+# Min/max is not 0 or 100
+zero_mat = function(x,a) {
+  if (x == 0) {
+    return(a)
+  }
+  if (x == 100) {
+    return(100-a)
+  }
+  else return(x)
+}
+
+# Apply function to each element
+P_rel_0 = apply(P_rel, c(1, 2), function(x) zero_mat(x, 1e-10))
 
 
 
