@@ -97,6 +97,20 @@ DX = as.matrix(dist(P_rel)^2) # political distances between municipalities
 KX = -0.5 * diag(sqrt(f)) %*% H %*% DX %*% t(H) %*% diag(sqrt(f)) # political kernel
 
 # b. --- political logit
+# Min/max is not 0 or 100
+zero_mat = function(x,a) {
+  if (x == 0) {
+    return(a)
+  }
+  if (x == 100) {
+    return(100-a)
+  }
+  else return(x)
+}
+
+# Apply function to each element
+P_rel_0 = apply(P_rel, c(1, 2), function(x) zero_mat(x, 1e-10))
+x_logit = log((P_rel_0/(100-P_rel_0)))
 DX_logit = as.matrix(dist(x_logit)^2) # political distances between municipalities
 KX_logit = -0.5 * diag(sqrt(f)) %*% H %*% DX_logit %*% t(H) %*% diag(sqrt(f)) # political kernel
 Dl = DX_logit
@@ -208,3 +222,18 @@ Z = as.matrix(Z_pre[,-1])
 rho = t(Z)%*%f
 Kling = diag(sqrt(f))%*%(Z%*%diag(1/as.vector(rho))%*%t(Z)-1)%*%diag(sqrt(f))
 KP = Kling
+
+# 11*. --- Deterrence + Metropolis Hasting (not used)
+Edeter=function(f,D){
+  n=dim(D)[1]
+  DistDeter=exp(-c*sqrt(D)) # distance deterrence function
+  P=diag(1/rowSums(DistDeter))%*%DistDeter # raw Markov chain
+  AuxG=diag(f)%*%P
+  Gamma=pmin(AuxG,t(AuxG))
+  LGamma=diag(rowSums(Gamma))-Gamma
+  E=diag(f)-LGamma
+  return(E)
+}
+
+DTer = Edeter(f, DZ)
+Kt = diag(1/sqrt(f))%*%(DTer-f%*%t(f))%*%diag(1/sqrt(f))

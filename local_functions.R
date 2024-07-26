@@ -7,14 +7,13 @@ library(ggplot2)
 library(ggtext)
 
 # --- Load data and distance
-source("1.0_read_data.R")
-source("1.1_distances_kernels.R")
+# source("1.0_read_data.R")
+# source("1.1_distances_kernels.R")
 
 #--------------------------------
 # Main functions
 #--------------------------------
 
-# --- RV function to store all results at once
 # List equal in length to the number of distances entered
 # - Y_list:         list of all MDS values for each dimension
 # - Delta_list:     list of Delta values
@@ -24,6 +23,7 @@ source("1.1_distances_kernels.R")
 # - eigen_val_list: list of eigenvalues and eigenvectors for each distance
 # - nb_lambda_pos:  list of number of positive lambda values per distance
 
+# RV function to store all results at once
 RV <- function(dist_types, f) {
   # Get list of kernels and distances
   K_list <- lapply(paste0("K", dist_types), get)
@@ -100,9 +100,9 @@ RV <- function(dist_types, f) {
 }
 
 # --- MDS function
-# Compute a list with MDS results and MDS plot
 # - Choose a corresponding distance in "dist_name"
 
+# Function to compute MDS results and MDS plot
 mds_fun = function(list_results, fi, dataVotFun, dist_types, dist_name){
 
   dist_nb = which(dist_types == dist_name)
