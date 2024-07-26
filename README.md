@@ -25,3 +25,9 @@ Mapping of the first factor score from MDS on $\mathbf{K}_{\mbox{\tiny simple}}$
     <img src="results/x_simple_f1.png" alt="MDS map simple" style="width:50%">
 </figure>
 
+Mapping of the first factor score for 
+(1) $\mathbb{K}_{\mbox{\tiny geo}}$, (2) $\mathbb{K}_{\mbox{\tiny road}}$, (3) $\mathbb{K}_{\mbox{\tiny time}}$, (4) $\mathbb{K}_{\mbox{\tiny deter}}$, (5)  $\mathbb{K}_{\mbox{\tiny diff}}$,  (6) $\mathbb{K}_{\mbox{\tiny MH}}$,  (7) $\mathbb{K}_{\mbox{\tiny size}}$,  (8) $\mathbb{K}_{\mbox{\tiny dens}}$ and   (9) $\mathbb{K}_{\mbox{\tiny elev}}$   (in order). The diffusion time has been set to $t=10$ for $\mathbb{K}_{\mbox{\tiny diff}}$. The map for $\mathbb{K}_{\mbox{\tiny ling}}$
+
+<figure>
+    <img src="results/first_factor_scores.png" alt="MDS maps" style="width:50%">
+</figure>
