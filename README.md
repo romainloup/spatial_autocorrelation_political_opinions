@@ -13,8 +13,15 @@ spatial autocorrelation; spatial weights; kernels; voting analysis; weighted MDS
 
 ## Some results
 
-#### First and second MDS political factor scores extracted from $\mathbf{K}_{\mbox{\tiny simple}}$
+First and second MDS political factor scores extracted from $\mathbf{K}_{\mbox{\tiny simple}}$
 
 <figure>
     <img src="results/mds_simple.png" alt="MDS simple" style="width:50%">
 </figure>
+
+Mapping of the first factor score from MDS on $\mathbf{K}_{\mbox{\tiny simple}}$
+
+<figure>
+    <img src="results/x_simple_f1.png" alt="MDS simple" style="width:50%">
+</figure>
+
