@@ -10,3 +10,9 @@ and the versatility of the approach is illustrated by considering four feature k
 
 ## Keywords
 spatial autocorrelation; spatial weights; kernels; voting analysis; weighted MDS
+
+## Some results
+#### First and second MDS political factor scores extracted from $\mathbf{K}_{\mbox{\tiny simple}}$
+<figure>
+    <img src="results/mds_simple.png" alt="MDS simple" style="width:50%">
+</figure>
