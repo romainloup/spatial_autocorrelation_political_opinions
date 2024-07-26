@@ -22,6 +22,6 @@ First and second MDS political factor scores extracted from $\mathbf{K}_{\mbox{\
 Mapping of the first factor score from MDS on $\mathbf{K}_{\mbox{\tiny simple}}$
 
 <figure>
-    <img src="results/x_simple_f1.png" alt="MDS simple" style="width:50%">
+    <img src="results/x_simple_f1.png" alt="MDS map simple" style="width:50%">
 </figure>
 
