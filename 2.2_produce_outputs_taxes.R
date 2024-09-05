@@ -15,6 +15,8 @@ taxes <- taxes %>% replace(is.na(.), 0)
 View(taxes)
 dim(taxes)
 
+taxes = taxes_communes[,4:12]/rowSums(taxes_communes[,4:12])
+
 Db = as.matrix(dist(taxes)^2)
 Kb = -0.5 * diag(sqrt(f)) %*% H %*% Db %*% t(H) %*% diag(sqrt(f)) # economical kernel
 
