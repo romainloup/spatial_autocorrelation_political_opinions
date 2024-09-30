@@ -17,16 +17,23 @@ dim(taxes)
 
 taxes = taxes_communes[,4:12]/rowSums(taxes_communes[,4:12])
 
+# Impôts centrés
+taxes = taxes_communes[,13]/taxes_classes[,13]
+taxes = as.data.frame(taxes)
+taxes$taxes_centr = taxes$taxes-mean(taxes$taxes)
+taxes$municipality = taxes_communes$municipality
+
 Db = as.matrix(dist(taxes)^2)
 Kb = -0.5 * diag(sqrt(f)) %*% H %*% Db %*% t(H) %*% diag(sqrt(f)) # economical kernel
 
 dist_types = c("X","b")
 
-results_pol_taxes = RV(dist_types,f) # take a very long time with all distances
-results_pol_taxes$Z_RV
+results_pol_taxes2 = RV(dist_types,f) # take a very long time with all distances
+results_pol_taxes2$Z_RV
 
 # Select a distance to produce results
-mds_list = mds_fun(results_pol_taxes, f, dataVot, dist_types, "b") ; mds_list$mds_plot
+mds_list = mds_fun(results_pol_taxes2, f, dataVot, dist_types, "b") ; mds_list$mds_plot
+ggsave("taxes.png", width = 8, height = 9)
 
 ggplotly(mds_list$mds_plot)
 
